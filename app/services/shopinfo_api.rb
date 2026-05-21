@@ -30,7 +30,7 @@ class ShopinfoApi
   private
 
   def get(path)
-    handle(connection.get(path))
+    handle(connection.get(path.sub(%r{\A/}, "")))
   end
 
   def handle(response)
@@ -49,7 +49,11 @@ class ShopinfoApi
     end
   end
 
+  # Faraday requires a trailing slash on the base URL for path-joining to keep
+  # the /api/v1 prefix; without it, "/me/ping" replaces "/api/v1" instead of
+  # appending. Normalize here so SHOPINFO_API_BASE_URL works either way.
   def base_url
-    ENV.fetch("SHOPINFO_API_BASE_URL", DEFAULT_BASE_URL)
+    raw = ENV.fetch("SHOPINFO_API_BASE_URL", DEFAULT_BASE_URL)
+    raw.end_with?("/") ? raw : "#{raw}/"
   end
 end

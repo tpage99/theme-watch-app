@@ -31,8 +31,9 @@ end
 # terminating a worker in development environments.
 worker_timeout 3600 if ENV.fetch("RAILS_ENV", "development") == "development"
 
-# Specifies the `port` that Puma will listen on to receive requests; default is 3000.
-port ENV.fetch("PORT") { 3000 }
+# shopinfo.app (web_scraper) owns localhost:3000 in dev, so we default to 3001
+# here. PORT env var still wins (Render sets it in production).
+port ENV.fetch("PORT") { 3001 }
 
 # Specifies the `environment` that Puma will run in.
 environment rails_env
