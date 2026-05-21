@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: theme-watch
+    runtime: docker
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    dockerCommand: bundle exec puma -C config/puma.rb
+    healthCheckPath: /up
+    autoDeploy: true
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_SERVE_STATIC_FILES
+        value: "true"
+      - key: RAILS_LOG_TO_STDOUT
+        value: "true"
+      - key: WEB_CONCURRENCY
+        value: "1"
+      # shopinfo.app public URL. Swap to the Render-internal hostname once both
+      # services share a private network (Oregon → Oregon, same workspace).
+      - key: SHOPINFO_API_BASE_URL
+        value: https://shopinfo.app/api/v1
+      # Secrets — set in the Render dashboard, not committed.
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: CLERK_FRONTEND_API
+        sync: false
+      - key: CLERK_PUBLISHABLE_KEY
+        sync: false
