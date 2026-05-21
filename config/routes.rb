@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   root "pages#landing"
 
   get "dashboard", to: "dashboard#index", as: :dashboard
+  get "my-apps",   to: "my_apps#index",   as: :my_apps
+  get "alerts",    to: "alerts#index",    as: :alerts
+  get "settings",  to: "settings#index",  as: :settings
 
   get  "sign-in",  to: "sessions#new",      as: :sign_in
   get  "sign-up",  to: "sessions#sign_up",  as: :sign_up

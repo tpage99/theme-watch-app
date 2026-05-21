@@ -15,3 +15,6 @@ application.register("clerk-mount", ClerkMountController)
 
 import ClerkSignOutController from "./clerk_sign_out_controller"
 application.register("clerk-sign-out", ClerkSignOutController)
+
+import SidebarController from "./sidebar_controller"
+application.register("sidebar", SidebarController)

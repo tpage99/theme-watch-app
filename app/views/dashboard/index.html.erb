@@ -1,59 +1,45 @@
 <% content_for :title, "Dashboard | theme.watch" %>
 
-<main class="min-h-screen flex items-center justify-center px-6 py-16 gradient-mesh">
-  <div class="w-full max-w-xl">
-    <a href="<%= root_path %>" class="flex items-center justify-center gap-2.5 mb-10">
-      <div class="w-8 h-8 rounded-md bg-tw-500 flex items-center justify-center">
-        <svg class="w-4 h-4 text-tw-950" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-          <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-        </svg>
-      </div>
-      <span class="font-semibold text-base tracking-tight">theme.watch</span>
-    </a>
+<div class="max-w-4xl">
+  <header class="mb-8">
+    <h1 class="text-2xl font-bold tracking-tight">Dashboard</h1>
+    <p class="mt-2 text-sm text-white/40">Your theme.watch developer profile, pulled live from shopinfo.app.</p>
+  </header>
 
+  <% if @ping %>
+    <% display_email = @ping["email"].presence || clerk_user_email %>
     <div class="rounded-xl border border-white/10 bg-white/[0.03] p-8">
-      <% if @ping %>
-        <% display_email = @ping["email"].presence || clerk_user_email %>
-        <h1 class="text-2xl font-bold tracking-tight">
-          Hello, <span class="text-tw-400"><%= display_email.presence || "developer" %></span>.
-        </h1>
-        <p class="mt-3 text-sm text-white/40">
-          Authenticated via Clerk. shopinfo.app upserted your AppDeveloper record on first hit.
-        </p>
+      <h2 class="text-xl font-semibold tracking-tight">
+        Hello, <span class="text-tw-400"><%= display_email.presence || "developer" %></span>.
+      </h2>
+      <p class="mt-2 text-sm text-white/40">
+        Authenticated via Clerk. shopinfo.app upserted your AppDeveloper record on first hit.
+      </p>
 
-        <dl class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 text-sm">
-          <div>
-            <dt class="text-white/40 text-xs uppercase tracking-wider font-medium">Clerk user ID</dt>
-            <dd class="mt-1 text-white/80 font-mono text-xs break-all"><%= @ping["clerk_user_id"] %></dd>
-          </div>
-          <div>
-            <dt class="text-white/40 text-xs uppercase tracking-wider font-medium">App developer ID</dt>
-            <dd class="mt-1 text-white/80 font-mono"><%= @ping["app_developer_id"] %></dd>
-          </div>
-          <div>
-            <dt class="text-white/40 text-xs uppercase tracking-wider font-medium">Email (from shopinfo.app)</dt>
-            <dd class="mt-1 text-white/80"><%= @ping["email"].presence || "—" %></dd>
-          </div>
-          <div>
-            <dt class="text-white/40 text-xs uppercase tracking-wider font-medium">Last seen</dt>
-            <dd class="mt-1 text-white/80 text-xs"><%= @ping["clerk_last_seen_at"] %></dd>
-          </div>
-        </dl>
-      <% else %>
-        <h1 class="text-xl font-semibold text-amber-300">Signed in, but shopinfo.app could not be reached.</h1>
-        <p class="mt-3 text-sm text-white/50"><%= @api_error %></p>
-        <p class="mt-2 text-xs text-white/30">Clerk JWT was verified locally — only the upstream API call failed.</p>
-      <% end %>
-
-      <button
-        type="button"
-        data-controller="clerk-sign-out"
-        data-action="click->clerk-sign-out#signOut"
-        class="mt-10 inline-block px-5 py-2.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-sm text-white/70 hover:text-white font-medium transition-all cursor-pointer"
-      >
-        Sign out
-      </button>
+      <dl class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 text-sm">
+        <div>
+          <dt class="text-white/40 text-xs uppercase tracking-wider font-medium">Clerk user ID</dt>
+          <dd class="mt-1 text-white/80 font-mono text-xs break-all"><%= @ping["clerk_user_id"] %></dd>
+        </div>
+        <div>
+          <dt class="text-white/40 text-xs uppercase tracking-wider font-medium">App developer ID</dt>
+          <dd class="mt-1 text-white/80 font-mono"><%= @ping["app_developer_id"] %></dd>
+        </div>
+        <div>
+          <dt class="text-white/40 text-xs uppercase tracking-wider font-medium">Email (from shopinfo.app)</dt>
+          <dd class="mt-1 text-white/80"><%= @ping["email"].presence || "—" %></dd>
+        </div>
+        <div>
+          <dt class="text-white/40 text-xs uppercase tracking-wider font-medium">Last seen</dt>
+          <dd class="mt-1 text-white/80 text-xs"><%= @ping["clerk_last_seen_at"] %></dd>
+        </div>
+      </dl>
     </div>
-  </div>
-</main>
+  <% else %>
+    <div class="rounded-xl border border-amber-500/20 bg-amber-500/[0.04] p-6">
+      <h2 class="text-base font-semibold text-amber-300">Signed in, but shopinfo.app could not be reached.</h2>
+      <p class="mt-2 text-sm text-white/55"><%= @api_error %></p>
+      <p class="mt-2 text-xs text-white/35">Clerk JWT was verified locally — only the upstream API call failed.</p>
+    </div>
+  <% end %>
+</div>
