@@ -1,0 +1,26 @@
+<% content_for :title, "Sign up | theme.watch" %>
+
+<main class="min-h-screen flex items-center justify-center px-6 py-16 gradient-mesh">
+  <div class="w-full max-w-md">
+    <a href="<%= root_path %>" class="flex items-center justify-center gap-2.5 mb-10">
+      <div class="w-8 h-8 rounded-md bg-tw-500 flex items-center justify-center">
+        <svg class="w-4 h-4 text-tw-950" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        </svg>
+      </div>
+      <span class="font-semibold text-base tracking-tight">theme.watch</span>
+    </a>
+
+    <div
+      data-controller="clerk-mount"
+      data-clerk-mount-mount-value="sign-up"
+      data-clerk-mount-after-sign-up-url-value="/dashboard"
+      data-clerk-mount-sign-in-url-value="<%= sign_in_path %>"
+    ></div>
+
+    <p class="mt-8 text-center text-sm text-white/40">
+      Already have an account? <a href="<%= sign_in_path %>" class="text-tw-400 hover:text-tw-300 font-medium">Sign in</a>
+    </p>
+  </div>
+</main>

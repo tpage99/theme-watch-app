@@ -41,6 +41,15 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
+# Verify Clerk-issued JWTs against the Clerk JWKS endpoint.
+gem "jwt", "~> 2.8"
+
+# HTTP client for the shopinfo.app API.
+gem "faraday", "~> 2.9"
+
+# Load environment variables from .env in dev/test.
+gem "dotenv-rails", groups: [:development, :test]
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]

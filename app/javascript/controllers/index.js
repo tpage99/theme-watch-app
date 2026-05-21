@@ -9,3 +9,9 @@ application.register("hello", HelloController)
 
 import WaitlistController from "./waitlist_controller"
 application.register("waitlist", WaitlistController)
+
+import ClerkMountController from "./clerk_mount_controller"
+application.register("clerk-mount", ClerkMountController)
+
+import ClerkSignOutController from "./clerk_sign_out_controller"
+application.register("clerk-sign-out", ClerkSignOutController)
