@@ -1,0 +1,516 @@
+<% content_for :head do %>
+  <meta name="description" content="Know when Shopify themes change before your merchants do. Track compatibility across 1,100+ Shopify themes, get version alerts, and show up as a verified app on shopinfo.app.">
+  <meta property="og:title" content="theme.watch | For Shopify App Developers">
+  <meta property="og:description" content="Theme compatibility tracking, version alerts, and public app profiles. Know when themes change before your merchants report it.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://theme.watch">
+  <link rel="canonical" href="https://theme.watch">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "theme.watch",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web",
+    "description": "Theme compatibility tracking for Shopify app developers. Version alerts, compatibility management, and verified app profiles across 1,100+ Shopify themes.",
+    "url": "https://theme.watch",
+    "offers": {
+      "@type": "Offer",
+      "price": "39",
+      "priceCurrency": "USD",
+      "priceValidUntil": "2027-12-31"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "The Pages Media",
+      "url": "https://shopinfo.app"
+    }
+  }
+  </script>
+<% end %>
+
+<div class="grain"></div>
+
+<!-- Nav -->
+<nav class="fixed top-0 w-full z-40 backdrop-blur-md bg-tw-950/80 border-b border-white/5">
+  <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2.5 group">
+      <div class="w-7 h-7 rounded-md bg-tw-500 flex items-center justify-center">
+        <svg class="w-4 h-4 text-tw-950" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        </svg>
+      </div>
+      <span class="font-semibold text-sm tracking-tight">theme.watch</span>
+    </a>
+    <div class="flex items-center gap-6">
+      <a href="#features" class="text-sm text-white/50 hover:text-white/80 transition-colors">Features</a>
+      <a href="#how-it-works" class="text-sm text-white/50 hover:text-white/80 transition-colors">How It Works</a>
+      <a href="#pricing" class="text-sm text-white/50 hover:text-white/80 transition-colors">Pricing</a>
+      <a href="#waitlist" class="text-sm text-tw-400 hover:text-tw-300 transition-colors font-medium">
+        Join waitlist &rarr;
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="relative min-h-[90vh] flex items-center gradient-mesh border-grid">
+  <div class="max-w-5xl mx-auto px-6 pt-28 pb-20">
+    <div class="max-w-2xl">
+
+      <!-- Badge -->
+      <div class="animate-fade-up inline-flex items-center gap-2 px-3 py-1 rounded-full border border-tw-700/40 bg-tw-900/50 text-xs font-medium text-tw-400 mb-8">
+        <span class="w-1.5 h-1.5 rounded-full bg-tw-400 animate-pulse"></span>
+        Coming soon. Join the waitlist.
+      </div>
+
+      <!-- Headline -->
+      <h1 class="animate-fade-up delay-1 text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] text-white">
+        Know when Shopify themes change
+        <span class="text-tw-400"> before your merchants do.</span>
+      </h1>
+
+      <!-- Subhead -->
+      <p class="animate-fade-up delay-2 mt-6 text-lg sm:text-xl text-white/50 leading-relaxed max-w-lg">
+        Theme compatibility tracking for Shopify app developers. Version alerts, compatibility management, and verified app profiles across 1,100+ Shopify themes.
+      </p>
+
+      <!-- CTA -->
+      <div id="waitlist" class="animate-fade-up delay-3 mt-10 scroll-mt-24">
+        <form id="waitlist-form" class="flex flex-col sm:flex-row gap-3 max-w-md" data-controller="waitlist">
+          <input
+            type="email"
+            name="email"
+            required
+            placeholder="you@yourapp.com"
+            class="cta-input flex-1 py-5 sm:py-3 px-5 sm:px-4 rounded-xl sm:rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white/30 text-lg sm:text-sm focus:outline-none focus:border-tw-500 transition-all"
+          >
+          <button
+            type="submit"
+            class="py-5 sm:py-3 px-6 rounded-xl sm:rounded-lg bg-tw-500 hover:bg-tw-400 text-tw-950 font-semibold text-lg sm:text-sm transition-colors whitespace-nowrap cursor-pointer"
+          >
+            Join waitlist
+          </button>
+        </form>
+        <p class="mt-3 text-xs text-white/25">No spam. One email when we start accepting apps.</p>
+
+        <!-- Success state (hidden by default) -->
+        <div id="waitlist-success" class="hidden mt-4 px-4 py-3 rounded-lg bg-tw-500/10 border border-tw-500/20">
+          <p class="text-sm text-tw-400 font-medium">You're on the list. We'll be in touch.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Social proof bar -->
+<section class="border-y border-white/5 bg-tw-950/80">
+  <div class="max-w-5xl mx-auto px-6 py-10">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-0 text-center">
+      <div class="animate-fade-up delay-2">
+        <div class="text-3xl font-bold text-white tracking-tight">1,143</div>
+        <div class="mt-1 text-sm text-white/40">Shopify themes tracked</div>
+      </div>
+      <div class="animate-fade-up delay-3 sm:border-x sm:border-white/5">
+        <div class="text-3xl font-bold text-white tracking-tight">650k+</div>
+        <div class="mt-1 text-sm text-white/40">Lifetime theme page views</div>
+      </div>
+      <div class="animate-fade-up delay-4">
+        <div class="text-3xl font-bold text-white tracking-tight">25,890</div>
+        <div class="mt-1 text-sm text-white/40">Version changes tracked</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Value Props -->
+<section id="features" class="py-24 sm:py-32 scroll-mt-16">
+  <div class="max-w-5xl mx-auto px-6">
+
+    <div class="max-w-lg mb-16">
+      <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">
+        Built for app developers who support <span class="text-tw-400">multiple Shopify themes.</span>
+      </h2>
+      <p class="mt-4 text-white/40 leading-relaxed">
+        Shopify has 1,100+ themes. Your merchants use hundreds of them. theme.watch gives you the data layer to track, manage, and communicate compatibility without the manual work.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+      <!-- Card 1 -->
+      <div class="feature-card rounded-xl border border-white/5 bg-white/[0.02] p-8">
+        <div class="w-10 h-10 rounded-lg bg-tw-500/10 flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-tw-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold mb-2">Version alerts</h3>
+        <p class="text-sm text-white/40 leading-relaxed">
+          Get notified when any theme you support ships a new version. Email, Slack, or webhooks, it's your choice. Catch compatibility issues during testing, not from support tickets.
+        </p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="feature-card rounded-xl border border-white/5 bg-white/[0.02] p-8">
+        <div class="w-10 h-10 rounded-lg bg-tw-500/10 flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-tw-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0112 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 0v1.5c0 .621-.504 1.125-1.125 1.125" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold mb-2">Compatibility matrix</h3>
+        <p class="text-sm text-white/40 leading-relaxed">
+          Maintain a structured record of which themes your app supports, which need customization, and which have known issues. Import via CSV or manage one at a time.
+        </p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="feature-card rounded-xl border border-white/5 bg-white/[0.02] p-8">
+        <div class="w-10 h-10 rounded-lg bg-tw-500/10 flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-tw-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold mb-2">Verified app profiles</h3>
+        <p class="text-sm text-white/40 leading-relaxed">
+          Get a verified badge on Shopify theme pages with tens of thousands of monthly views. Add your own description, docs, and support links to your app profile.
+        </p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="feature-card rounded-xl border border-white/5 bg-white/[0.02] p-8">
+        <div class="w-10 h-10 rounded-lg bg-tw-500/10 flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-tw-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold mb-2">Reduce support tickets</h3>
+        <p class="text-sm text-white/40 leading-relaxed">
+          Merchants check theme compatibility before installing. A clear, public matrix means fewer "does this work with my theme?" tickets and fewer surprises when themes update.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- shopinfo.app integration -->
+<section class="py-24 sm:py-32 border-t border-white/5 gradient-mesh">
+  <div class="max-w-5xl mx-auto px-6">
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-tw-700/40 bg-tw-900/50 text-xs font-medium text-tw-400 mb-6">
+          Powered by shopinfo.app
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">
+          Your app shows up where merchants are <span class="text-tw-400">already researching Shopify themes.</span>
+        </h2>
+        <p class="mt-4 text-white/40 leading-relaxed">
+          shopinfo.app gets tens of thousands of Shopify theme listing views each month. When you set your compatibility data on theme.watch, it surfaces directly on theme pages. Right where merchants are deciding which theme to use.
+        </p>
+        <div class="mt-8 space-y-4">
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 text-tw-400 mt-1 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <div>
+              <span class="text-sm text-white/70 font-medium">Compatible apps on every theme page</span>
+              <p class="text-sm text-white/35 mt-0.5">Merchants see which apps work with a theme before they buy it.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 text-tw-400 mt-1 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <div>
+              <span class="text-sm text-white/70 font-medium">Your own app page on shopinfo.app</span>
+              <p class="text-sm text-white/35 mt-0.5">Add your own description, docs, and support links to your app profile.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 text-tw-400 mt-1 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <div>
+              <span class="text-sm text-white/70 font-medium">Browsable app directory by category</span>
+              <p class="text-sm text-white/35 mt-0.5">Reviews, loyalty, subscriptions, and search. Merchants find your app by what it does.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mock of theme page with compatible apps -->
+      <div class="rounded-xl border border-white/10 bg-white/[0.02] overflow-hidden">
+        <!-- Browser chrome -->
+        <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+          <div class="flex gap-1.5">
+            <div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+          </div>
+          <div class="flex-1 mx-3 h-6 rounded bg-white/5 flex items-center px-3">
+            <span class="text-[10px] text-white/25 font-mono">shopinfo.app/themes/horizon</span>
+          </div>
+        </div>
+        <!-- Page content mock -->
+        <div class="p-6 space-y-5">
+          <!-- Theme header mock -->
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-tw-600/30 to-tw-400/10 border border-tw-500/20"></div>
+            <div>
+              <div class="text-sm font-semibold text-white/80">Horizon</div>
+              <div class="text-xs text-white/30">by Shopify</div>
+            </div>
+          </div>
+
+          <div class="h-px bg-white/5"></div>
+
+          <!-- Compatible apps section mock -->
+          <div>
+            <div class="text-xs font-semibold text-white/50 uppercase tracking-wider mb-3">Compatible Apps</div>
+            <div class="space-y-2.5">
+              <!-- App row 1 -->
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-7 h-7 rounded-md bg-purple-500/20 border border-purple-400/20 flex items-center justify-center">
+                    <span class="text-[9px] font-bold text-purple-300">K</span>
+                  </div>
+                  <div>
+                    <div class="text-xs font-medium text-white/70">Klaviyo</div>
+                    <div class="text-[10px] text-white/30">Email and SMS Marketing</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    Supported
+                  </span>
+                  <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-medium bg-tw-500/10 text-tw-400 border border-tw-500/20">Verified</span>
+                </div>
+              </div>
+              <!-- App row 2 -->
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-7 h-7 rounded-md bg-orange-500/20 border border-orange-400/20 flex items-center justify-center">
+                    <span class="text-[9px] font-bold text-orange-300">L</span>
+                  </div>
+                  <div>
+                    <div class="text-xs font-medium text-white/70">Loox</div>
+                    <div class="text-[10px] text-white/30">Reviews and UGC</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    Supported
+                  </span>
+                  <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-medium bg-tw-500/10 text-tw-400 border border-tw-500/20">Verified</span>
+                </div>
+              </div>
+              <!-- App row 3 -->
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-7 h-7 rounded-md bg-blue-500/20 border border-blue-400/20 flex items-center justify-center">
+                    <span class="text-[9px] font-bold text-blue-300">R</span>
+                  </div>
+                  <div>
+                    <div class="text-xs font-medium text-white/70">Recharge</div>
+                    <div class="text-[10px] text-white/30">Subscriptions</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                    <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" /></svg>
+                    Needs setup
+                  </span>
+                </div>
+              </div>
+            </div>
+            <!-- CTA -->
+            <a href="https://shopinfo.app/themes/dawn#compatible-apps" class="mt-4 inline-flex items-center gap-1 text-xs text-tw-400 hover:text-tw-300 font-medium transition-colors">
+              See all 12 compatible apps
+              <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Live preview link -->
+    <div class="mt-10 text-center">
+      <p class="text-sm text-white/30 mb-4">Don't take our word for it. See it on a real theme page.</p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a href="https://shopinfo.app/themes/dawn?preview=themewatch#compatible-apps"
+           target="_blank"
+           rel="noopener"
+           class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-sm text-white/70 hover:text-white font-medium transition-all">
+          Preview on Dawn
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>
+        </a>
+        <a href="https://shopinfo.app/themes/whisk?preview=themewatch#compatible-apps"
+           target="_blank"
+           rel="noopener"
+           class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-sm text-white/70 hover:text-white font-medium transition-all">
+          Preview on Whisk
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>
+        </a>
+        <a href="https://shopinfo.app/themes/primavera?preview=themewatch#compatible-apps"
+           target="_blank"
+           rel="noopener"
+           class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-sm text-white/70 hover:text-white font-medium transition-all">
+          Preview on Primavera
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>
+        </a>
+      </div>
+      <p class="mt-3 text-xs text-white/20">Opens shopinfo.app in preview mode. No login required</p>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section id="how-it-works" class="py-24 sm:py-32 border-t border-white/5 scroll-mt-16">
+  <div class="max-w-5xl mx-auto px-6">
+
+    <div class="max-w-lg mb-16">
+      <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">
+        How it works
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-12 sm:gap-8">
+
+      <div>
+        <div class="flex items-center justify-center w-9 h-9 rounded-full border border-tw-500/30 text-tw-400 text-sm font-mono font-medium mb-5">1</div>
+        <h3 class="font-semibold mb-2">Register your app</h3>
+        <p class="text-sm text-white/40 leading-relaxed">
+          Sign up on theme.watch and register your Shopify app to verify theme compatibility.
+        </p>
+      </div>
+
+      <div>
+        <div class="flex items-center justify-center w-9 h-9 rounded-full border border-tw-500/30 text-tw-400 text-sm font-mono font-medium mb-5">2</div>
+        <h3 class="font-semibold mb-2">Set your compatibility</h3>
+        <p class="text-sm text-white/40 leading-relaxed">
+          Mark which themes are supported and which need setup. Add version notes and setup requirements. Import in bulk via CSV.
+        </p>
+      </div>
+
+      <div>
+        <div class="flex items-center justify-center w-9 h-9 rounded-full border border-tw-500/30 text-tw-400 text-sm font-mono font-medium mb-5">3</div>
+        <h3 class="font-semibold mb-2">Stay ahead of changes</h3>
+        <p class="text-sm text-white/40 leading-relaxed">
+          Get alerts when themes you support ship new versions. Your compatibility data shows up on shopinfo.app theme pages automatically.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Pricing preview -->
+<section id="pricing" class="py-24 sm:py-32 border-t border-white/5 scroll-mt-16">
+  <div class="max-w-5xl mx-auto px-6">
+
+    <div class="max-w-lg mb-12 mx-auto text-center">
+      <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">
+        Simple pricing
+      </h2>
+      <p class="mt-4 text-white/40 leading-relaxed">
+        One plan. Scales with your app portfolio. No tiers to navigate.
+      </p>
+    </div>
+
+    <div class="max-w-sm mx-auto">
+      <div class="rounded-xl border border-white/10 bg-white/[0.03] p-8">
+        <div class="flex items-baseline gap-1">
+          <span class="text-4xl font-bold tracking-tight">$39</span>
+          <span class="text-white/40 text-sm">/month</span>
+        </div>
+        <p class="mt-2 text-sm text-white/40">Includes 1 app. Additional apps $19/mo each.</p>
+
+        <div class="mt-8 space-y-3">
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 text-tw-400 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-sm text-white/60">Track as many of Shopify's 1,100+ themes as you need</span>
+          </div>
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 text-tw-400 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-sm text-white/60">Version change alerts like email, Slack, and webhooks</span>
+          </div>
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 text-tw-400 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-sm text-white/60">Verified app profile on shopinfo.app</span>
+          </div>
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 text-tw-400 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-sm text-white/60">Theme compatibility matrix with public display</span>
+          </div>
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 text-tw-400 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-sm text-white/60">CSV import for bulk compatibility data</span>
+          </div>
+        </div>
+
+        <a href="#waitlist" class="mt-8 block w-full h-11 rounded-lg bg-tw-500 hover:bg-tw-400 text-tw-950 font-semibold text-sm transition-colors text-center leading-[2.75rem]">
+          Join the waitlist
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Bottom CTA -->
+<section class="py-24 sm:py-32 border-t border-white/5">
+  <div class="max-w-5xl mx-auto px-6 text-center">
+    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight max-w-md mx-auto">
+      Stop finding out about Shopify theme changes from support tickets.
+    </h2>
+    <p class="mt-4 text-white/40 max-w-sm mx-auto">
+      Join the waitlist for early access.
+    </p>
+    <form id="bottom-cta-form" class="mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto" data-controller="waitlist">
+      <input
+        type="email"
+        name="email"
+        required
+        placeholder="you@yourapp.com"
+        class="cta-input flex-1 py-5 sm:py-3 px-5 sm:px-4 rounded-xl sm:rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white/30 text-lg sm:text-sm focus:outline-none focus:border-tw-500 transition-all"
+      >
+      <button
+        type="submit"
+        class="py-5 sm:py-3 px-6 rounded-xl sm:rounded-lg bg-tw-500 hover:bg-tw-400 text-tw-950 font-semibold text-lg sm:text-sm transition-colors whitespace-nowrap cursor-pointer"
+      >
+        Join waitlist
+      </button>
+    </form>
+    <!-- Success state for bottom CTA (hidden by default) -->
+    <div id="bottom-cta-success" class="hidden mt-8 max-w-md mx-auto px-4 py-3 rounded-lg bg-tw-500/10 border border-tw-500/20">
+      <p class="text-sm text-tw-400 font-medium">You're on the list. We'll be in touch.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="border-t border-white/5 py-10">
+  <div class="max-w-5xl mx-auto px-6 flex items-center justify-center gap-4">
+    <span class="text-xs text-white/25">&copy; 2026 The Pages Media</span>
+    <span class="text-xs text-white/15">&middot;</span>
+    <a href="https://shopinfo.app" class="text-xs text-white/25 hover:text-white/40 transition-colors">Powered by shopinfo.app</a>
+  </div>
+</footer>
