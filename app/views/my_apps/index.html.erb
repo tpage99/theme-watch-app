@@ -37,6 +37,7 @@
             <% end %>
             <div class="mt-3 flex items-center gap-4 text-xs text-white/40">
               <span><%= app["compatible_theme_count"] %> compatible <%= "theme".pluralize(app["compatible_theme_count"]) %></span>
+              <%= link_to "Manage compatibilities →", my_app_compatibilities_path(app["slug"]), class: "text-tw-300 hover:text-tw-200 underline-offset-2 hover:underline font-medium" %>
               <% if app["shopify_app_store_url"].present? %>
                 <a href="<%= app["shopify_app_store_url"] %>" target="_blank" rel="noopener" class="text-white/55 hover:text-tw-300 underline-offset-2 hover:underline">View on Shopify App Store</a>
               <% end %>

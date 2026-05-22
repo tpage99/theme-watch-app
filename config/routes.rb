@@ -9,6 +9,17 @@ Rails.application.routes.draw do
 
   get "dashboard", to: "dashboard#index", as: :dashboard
   get "my-apps",   to: "my_apps#index",   as: :my_apps
+  get "my-apps/:slug/compatibilities",
+      to: "my_app_compatibilities#index",
+      as: :my_app_compatibilities,
+      constraints: { slug: /[a-z0-9][a-z0-9\-]*/ }
+  post "my-apps/:slug/compatibilities",
+       to: "my_app_compatibilities#create",
+       constraints: { slug: /[a-z0-9][a-z0-9\-]*/ }
+  patch "my-apps/:slug/compatibilities/:theme_title",
+        to: "my_app_compatibilities#update",
+        as: :my_app_compatibility,
+        constraints: { slug: /[a-z0-9][a-z0-9\-]*/, theme_title: %r{[^/]+} }
   get "alerts",    to: "alerts#index",    as: :alerts
   get "settings",  to: "settings#index",  as: :settings
 

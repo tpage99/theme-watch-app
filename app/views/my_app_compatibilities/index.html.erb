@@ -1,0 +1,107 @@
+<% content_for :title, "#{@slug} compatibilities | theme.watch" %>
+
+<div class="max-w-4xl">
+  <nav class="mb-4 text-xs text-white/40">
+    <%= link_to "← My Apps", my_apps_path, class: "hover:text-tw-300 underline-offset-2 hover:underline" %>
+  </nav>
+
+  <header class="mb-8">
+    <h1 class="text-2xl font-bold tracking-tight"><%= @slug %></h1>
+    <p class="mt-2 text-sm text-white/40">Theme compatibility rows for this listing. Public rows show on the public app page on shopinfo.app.</p>
+  </header>
+
+  <% if flash[:notice] %>
+    <div class="mb-6 rounded-xl border border-tw-500/30 bg-tw-500/[0.06] p-4 text-sm text-tw-200"><%= flash[:notice] %></div>
+  <% end %>
+  <% if flash[:alert] %>
+    <div class="mb-6 rounded-xl border border-amber-500/30 bg-amber-500/[0.06] p-4 text-sm text-amber-200"><%= flash[:alert] %></div>
+  <% end %>
+
+  <% if @api_error %>
+    <div class="rounded-xl border border-amber-500/20 bg-amber-500/[0.04] p-6">
+      <h2 class="text-base font-semibold text-amber-300">Could not load compatibilities.</h2>
+      <p class="mt-2 text-sm text-white/55"><%= @api_error %></p>
+    </div>
+  <% else %>
+    <section class="mb-8 rounded-xl border border-white/10 bg-white/[0.03] p-5">
+      <h2 class="text-sm font-semibold tracking-tight mb-3">Add a compatibility row</h2>
+      <%= form_with url: url_for(controller: "my_app_compatibilities", action: "create", slug: @slug), method: :post, local: true, class: "space-y-3" do |f| %>
+        <div class="grid sm:grid-cols-2 gap-3">
+          <label class="block">
+            <span class="text-xs uppercase tracking-wider text-white/45">Theme title</span>
+            <%= f.text_field :theme_title, required: true, class: "mt-1 w-full rounded-md border border-white/15 bg-white/[0.04] px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-tw-400 focus:outline-none", placeholder: "Dawn" %>
+          </label>
+          <label class="block">
+            <span class="text-xs uppercase tracking-wider text-white/45">Status</span>
+            <%= f.select :status, [["Supported", "supported"], ["Needs customization", "needs_customization"], ["Not supported", "not_supported"], ["Unknown", "unknown"]], {}, class: "mt-1 w-full rounded-md border border-white/15 bg-white/[0.04] px-3 py-2 text-sm text-white focus:border-tw-400 focus:outline-none" %>
+          </label>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-3">
+          <label class="block">
+            <span class="text-xs uppercase tracking-wider text-white/45">Min theme version</span>
+            <%= f.text_field :min_theme_version, class: "mt-1 w-full rounded-md border border-white/15 bg-white/[0.04] px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-tw-400 focus:outline-none", placeholder: "Optional" %>
+          </label>
+          <label class="flex items-end gap-2 pb-2">
+            <%= f.check_box :visible_publicly, { checked: true }, "true", "false" %>
+            <span class="text-xs text-white/65">Visible publicly</span>
+          </label>
+        </div>
+        <label class="block">
+          <span class="text-xs uppercase tracking-wider text-white/45">Notes</span>
+          <%= f.text_area :notes, rows: 2, class: "mt-1 w-full rounded-md border border-white/15 bg-white/[0.04] px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-tw-400 focus:outline-none", placeholder: "Optional, max 1000 chars" %>
+        </label>
+        <button type="submit" class="rounded-md bg-tw-500 hover:bg-tw-400 text-tw-950 text-sm font-semibold px-4 py-2 transition-colors">Save compatibility</button>
+      <% end %>
+    </section>
+
+    <% if @compatibilities.any? %>
+      <ul class="space-y-3">
+        <% @compatibilities.each do |row| %>
+          <li class="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+            <%= form_with url: my_app_compatibility_path(slug: @slug, theme_title: row["theme_title"]), method: :patch, local: true, class: "space-y-3" do |f| %>
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <h3 class="text-base font-semibold tracking-tight"><%= row["theme_title"] %></h3>
+                  <p class="mt-1 text-[11px] text-white/40 font-mono">
+                    Last edited by <%= row["last_authored_by"] %> · <%= row["updated_at"] %>
+                  </p>
+                </div>
+                <% unless row["visible_publicly"] %>
+                  <span class="text-[10px] uppercase tracking-wider font-medium text-white/50 bg-white/[0.05] border border-white/15 px-1.5 py-0.5 rounded">Private</span>
+                <% end %>
+              </div>
+
+              <div class="grid sm:grid-cols-2 gap-3">
+                <label class="block">
+                  <span class="text-xs uppercase tracking-wider text-white/45">Status</span>
+                  <%= f.select :status, [["Supported", "supported"], ["Needs customization", "needs_customization"], ["Not supported", "not_supported"], ["Unknown", "unknown"]], { selected: row["status"] }, class: "mt-1 w-full rounded-md border border-white/15 bg-white/[0.04] px-3 py-2 text-sm text-white focus:border-tw-400 focus:outline-none" %>
+                </label>
+                <label class="block">
+                  <span class="text-xs uppercase tracking-wider text-white/45">Min theme version</span>
+                  <%= f.text_field :min_theme_version, value: row["min_theme_version"], class: "mt-1 w-full rounded-md border border-white/15 bg-white/[0.04] px-3 py-2 text-sm text-white focus:border-tw-400 focus:outline-none" %>
+                </label>
+              </div>
+
+              <label class="block">
+                <span class="text-xs uppercase tracking-wider text-white/45">Notes</span>
+                <%= f.text_area :notes, value: row["notes"], rows: 2, class: "mt-1 w-full rounded-md border border-white/15 bg-white/[0.04] px-3 py-2 text-sm text-white focus:border-tw-400 focus:outline-none" %>
+              </label>
+
+              <div class="flex items-center justify-between gap-3">
+                <label class="flex items-center gap-2">
+                  <%= f.check_box :visible_publicly, { checked: row["visible_publicly"] }, "true", "false" %>
+                  <span class="text-xs text-white/65">Visible publicly</span>
+                </label>
+                <button type="submit" class="rounded-md bg-tw-500 hover:bg-tw-400 text-tw-950 text-sm font-semibold px-4 py-2 transition-colors">Save</button>
+              </div>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <%= render "shared/placeholder_panel",
+                 title: "No compatibility rows yet.",
+                 body: "Add your first row above. Public rows appear on this app's page on shopinfo.app — private rows are visible only to you." %>
+    <% end %>
+  <% end %>
+</div>

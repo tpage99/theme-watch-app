@@ -16,6 +16,11 @@ class ShopinfoApi
   end
 
   class Unauthorized < Error; end
+  class Forbidden < Error
+    def reason
+      body.is_a?(Hash) ? body["reason"] : nil
+    end
+  end
 
   DEFAULT_BASE_URL = "http://localhost:3000/api/v1".freeze
 
@@ -31,15 +36,29 @@ class ShopinfoApi
     get("/me/apps")
   end
 
+  def app_compatibilities(slug, status: nil, limit: nil, cursor: nil)
+    query = { status: status, limit: limit, cursor: cursor }.compact
+    get("/apps/#{slug}/compatibilities", query: query)
+  end
+
+  def update_app_compatibility(slug, theme_title, attrs)
+    put("/apps/#{slug}/compatibilities/#{ERB::Util.url_encode(theme_title.to_s)}", body: attrs)
+  end
+
   private
 
-  def get(path)
-    handle(connection.get(path.sub(%r{\A/}, "")))
+  def get(path, query: {})
+    handle(connection.get(path.sub(%r{\A/}, ""), query))
+  end
+
+  def put(path, body:)
+    handle(connection.put(path.sub(%r{\A/}, ""), body))
   end
 
   def handle(response)
     return response.body if response.success?
     raise Unauthorized.new(status: response.status, body: response.body) if response.status == 401
+    raise Forbidden.new(status: response.status, body: response.body) if response.status == 403
 
     raise Error.new(status: response.status, body: response.body)
   end
