@@ -6,5 +6,48 @@
     <p class="mt-2 text-sm text-white/40">App listings you have claimed on shopinfo.app.</p>
   </header>
 
-  <%= render "shared/placeholder_panel", title: "App claim flow is not built yet.", body: "The shopinfo.app POST /api/v1/apps endpoint ships in Workstream 1 (Phase 2). Once it lands, this page will list your claimed AppListings and let you register new ones." %>
+  <% if @api_error %>
+    <div class="rounded-xl border border-amber-500/20 bg-amber-500/[0.04] p-6">
+      <h2 class="text-base font-semibold text-amber-300">Could not load your apps.</h2>
+      <p class="mt-2 text-sm text-white/55"><%= @api_error %></p>
+    </div>
+  <% elsif @apps.any? %>
+    <ul class="space-y-3">
+      <% @apps.each do |app| %>
+        <li class="rounded-xl border border-white/10 bg-white/[0.03] p-5 flex items-start gap-4">
+          <% if app["icon_url"].present? %>
+            <img src="<%= app["icon_url"] %>" alt="" class="w-12 h-12 rounded-lg border border-white/10 flex-shrink-0" loading="lazy">
+          <% else %>
+            <div class="w-12 h-12 rounded-lg border border-white/10 bg-white/[0.04] flex-shrink-0"></div>
+          <% end %>
+
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 flex-wrap">
+              <h2 class="text-base font-semibold tracking-tight"><%= app["name"] %></h2>
+              <% if app["verified"] %>
+                <span class="text-[10px] uppercase tracking-wider font-medium text-tw-300 bg-tw-500/15 border border-tw-500/30 px-1.5 py-0.5 rounded">Verified</span>
+              <% end %>
+              <% unless app["visible_publicly"] %>
+                <span class="text-[10px] uppercase tracking-wider font-medium text-white/50 bg-white/[0.05] border border-white/15 px-1.5 py-0.5 rounded">Private</span>
+              <% end %>
+            </div>
+            <p class="mt-1 text-xs text-white/40 font-mono"><%= app["slug"] %> · <%= app["category_label"] %></p>
+            <% if app["description"].present? %>
+              <p class="mt-2 text-sm text-white/55 line-clamp-2"><%= app["description"] %></p>
+            <% end %>
+            <div class="mt-3 flex items-center gap-4 text-xs text-white/40">
+              <span><%= app["compatible_theme_count"] %> compatible <%= "theme".pluralize(app["compatible_theme_count"]) %></span>
+              <% if app["shopify_app_store_url"].present? %>
+                <a href="<%= app["shopify_app_store_url"] %>" target="_blank" rel="noopener" class="text-white/55 hover:text-tw-300 underline-offset-2 hover:underline">View on Shopify App Store</a>
+              <% end %>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <%= render "shared/placeholder_panel",
+               title: "No claimed apps yet.",
+               body: "When you claim a Shopify app on shopinfo.app, it will appear here. The self-serve claim flow ships in a follow-up — for now, claims are admin-assigned." %>
+  <% end %>
 </div>

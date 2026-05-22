@@ -27,6 +27,10 @@ class ShopinfoApi
     get("/me/ping")
   end
 
+  def me_apps
+    get("/me/apps")
+  end
+
   private
 
   def get(path)
