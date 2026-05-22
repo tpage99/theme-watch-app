@@ -50,5 +50,10 @@ theme.watch is the developer-facing Rails app for the shopinfo.app ecosystem. Ap
 
 - API client: `app/services/shopinfo_api.rb`
 - Clerk concern: `app/controllers/concerns/clerk_authenticatable.rb`
-- Layout shell: `app/views/layouts/application.html.erb`
+- Layout shell (public): `app/views/layouts/application.html.erb`
+- Layout shell (authenticated, with sidebar): `app/views/layouts/authenticated.html.erb`
 - Landing: `app/views/pages/landing.html.erb`
+
+## Session handoff
+
+See [NEXT-STEPS.md](NEXT-STEPS.md) for current state and where to pick up next. Update it when state changes.
