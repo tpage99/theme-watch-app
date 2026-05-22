@@ -20,7 +20,10 @@ module ClerkAuthenticatable
   def require_clerk_user!
     return if clerk_signed_in?
 
-    session[:post_sign_in_redirect] = request.fullpath if request.get?
+    # `request.path` only — never `request.fullpath`. Clerk's handshake redirect
+    # arrives at /dashboard with a multi-kilobyte `__clerk_handshake` JWT in the
+    # query string; storing it would overflow the 4KB session cookie limit.
+    session[:post_sign_in_redirect] = request.path if request.get?
     redirect_to sign_in_path
   end
 
