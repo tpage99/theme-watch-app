@@ -1,15 +1,15 @@
 source "https://rubygems.org"
 
-ruby "3.2.2"
+ruby "3.4.7"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.1.4"
+gem "rails", "~> 8.1.3"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", ">= 5.0"
+gem "puma", "~> 8.0"
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem "jsbundling-rails"
@@ -42,10 +42,10 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 
 # Verify Clerk-issued JWTs against the Clerk JWKS endpoint.
-gem "jwt", "~> 2.8"
+gem "jwt", "~> 2.10"
 
 # HTTP client for the shopinfo.app API.
-gem "faraday", "~> 2.9"
+gem "faraday", "~> 2.14"
 
 # Load environment variables from .env in dev/test.
 gem "dotenv-rails", groups: [:development, :test]
