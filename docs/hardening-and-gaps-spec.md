@@ -212,7 +212,7 @@ Not code in this repo, but the agent should surface them to Taylor at the right 
 - [x] 3 Error handling consolidation (2026-09-21)
 - [x] 4 Tests and CI (2026-09-21)
 - [x] 5 Auth flow correctness (2026-09-21)
-- [ ] 6 Security headers and config
+- [x] 6 Security headers and config (2026-09-21, CSP report-only until one clean deploy)
 - [ ] 7 Remove unused machinery (task 1, Action Cable, already done in W1)
 - [ ] 8 View cleanup
 - [ ] 9a Claim flow

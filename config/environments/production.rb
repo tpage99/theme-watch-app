@@ -24,14 +24,15 @@ Rails.application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
 
-  # Assume all access to the app is happening through a SSL-terminating reverse proxy.
-  # config.assume_ssl = true
+  # Render terminates TLS and forwards X-Forwarded-Proto. Assume SSL so
+  # request.ssl? is always true behind the proxy and force_ssl cannot loop.
+  config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
 
-  # Skip http-to-https redirect for the default health check endpoint.
-  # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
+  # Skip http-to-https redirect for the health check endpoint.
+  config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
 
   # Log to STDOUT with the current request id as a default log tag.
   config.log_tags = [ :request_id ]
@@ -72,12 +73,16 @@ Rails.application.configure do
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
 
-  # Enable DNS rebinding protection and other `Host` header attacks.
-  # config.hosts = [
-  #   "example.com",     # Allow requests from example.com
-  #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
-  # ]
-  #
-  # Skip DNS rebinding protection for the default health check endpoint.
-  # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  # Host authorization (DNS rebinding and Host-header attacks). Only these
+  # hosts are served; anything else gets a 403. RENDER_EXTERNAL_HOSTNAME is set
+  # by Render to the service's onrender.com hostname.
+  config.hosts = [
+    "theme.watch",
+    "www.theme.watch",
+    ENV["RENDER_EXTERNAL_HOSTNAME"],
+    /\A[a-z0-9-]+\.onrender\.com\z/,
+  ].compact
+
+  # Render's health check does not send a public Host header; keep /up open.
+  config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end
