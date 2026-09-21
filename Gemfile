@@ -46,6 +46,8 @@ gem "jwt", "~> 2.10"
 
 # HTTP client for the shopinfo.app API.
 gem "faraday", "~> 2.14"
+# Retry middleware for the shopinfo.app client (idempotent GETs only, see ShopinfoApi#connection).
+gem "faraday-retry", "~> 2.4"
 
 # Load environment variables from .env in dev/test.
 gem "dotenv-rails", groups: [:development, :test]
@@ -67,6 +69,9 @@ group :development do
 end
 
 group :test do
+  # Stub outbound HTTP (Clerk JWKS, shopinfo.app) in tests.
+  gem "webmock"
+
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"

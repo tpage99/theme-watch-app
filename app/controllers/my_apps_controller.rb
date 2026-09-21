@@ -11,7 +11,7 @@ class MyAppsController < ApplicationController
   rescue ShopinfoApi::Error => e
     @apps = []
     @api_error = "shopinfo.app returned HTTP #{e.status}."
-  rescue Faraday::ConnectionFailed
+  rescue Faraday::ConnectionFailed, Faraday::TimeoutError
     @apps = []
     @api_error = "Could not reach shopinfo.app at #{ENV.fetch('SHOPINFO_API_BASE_URL', ShopinfoApi::DEFAULT_BASE_URL)}. Is the web_scraper dev server running?"
   end

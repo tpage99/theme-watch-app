@@ -207,8 +207,8 @@ Not code in this repo, but the agent should surface them to Taylor at the right 
 
 ## Progress
 
-- [x] 1 Runtime upgrade (2026-09-21, awaiting Taylor commit)
-- [ ] 2 Outbound HTTP hardening
+- [x] 1 Runtime upgrade (2026-09-21, committed)
+- [x] 2 Outbound HTTP hardening (2026-09-21)
 - [ ] 3 Error handling consolidation
 - [ ] 4 Tests and CI
 - [ ] 5 Auth flow correctness

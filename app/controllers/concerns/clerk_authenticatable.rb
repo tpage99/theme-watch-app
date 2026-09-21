@@ -4,11 +4,22 @@ require "net/http"
 # verification, but is adapted for a browser-facing Rails app: the JWT comes from
 # the Clerk-set __session cookie (or a Bearer header for API-style usage), and
 # auth failures redirect to /sign-in rather than rendering JSON.
+#
+# JWKS handling: keys are cached for JWKS_CACHE_TTL and refreshed on expiry or
+# when the JWT library asks for invalidation (unknown kid). If a refresh fails
+# and a previously fetched set is still in the cache, we log a warning and keep
+# verifying against the cached keys instead of signing everyone out.
 module ClerkAuthenticatable
   extend ActiveSupport::Concern
 
+  # Raised when the JWKS endpoint cannot be fetched and no cached copy exists.
+  class JwksFetchError < StandardError; end
+
   JWKS_CACHE_KEY = "clerk:jwks".freeze
-  JWKS_CACHE_TTL = 10.minutes
+  JWKS_CACHE_TTL = 10.minutes   # how long a fetched set is considered fresh
+  JWKS_STALE_TTL = 24.hours     # how long a stale set is kept as a fallback
+  JWKS_OPEN_TIMEOUT = 3         # seconds
+  JWKS_READ_TIMEOUT = 3         # seconds
   CLERK_SESSION_COOKIE = "__session".freeze
 
   included do
@@ -75,18 +86,48 @@ module ClerkAuthenticatable
   end
 
   def clerk_jwks_loader
-    ->(options) {
-      Rails.cache.fetch(JWKS_CACHE_KEY, expires_in: JWKS_CACHE_TTL, force: options[:invalidate]) do
-        fetch_clerk_jwks
-      end
-    }
+    ->(options) { load_clerk_jwks(invalidate: options[:invalidate]) }
+  end
+
+  # Returns the JWKS hash. Cache entries are { jwks:, fetched_at: } and live for
+  # JWKS_STALE_TTL so a stale copy is available if a refresh fails.
+  def load_clerk_jwks(invalidate: false)
+    cached = Rails.cache.read(JWKS_CACHE_KEY)
+    cached = nil unless cached.is_a?(Hash) && cached[:jwks].is_a?(Hash) && cached[:fetched_at]
+
+    if cached && !invalidate && cached[:fetched_at] > JWKS_CACHE_TTL.ago
+      return cached[:jwks]
+    end
+
+    jwks = fetch_clerk_jwks
+    Rails.cache.write(JWKS_CACHE_KEY, { jwks: jwks, fetched_at: Time.current }, expires_in: JWKS_STALE_TTL)
+    jwks
+  rescue JwksFetchError => e
+    raise unless cached
+
+    Rails.logger.warn(
+      "[Clerk] JWKS refresh failed (#{e.message}); serving cached keys fetched at #{cached[:fetched_at].iso8601}"
+    )
+    cached[:jwks]
   end
 
   def fetch_clerk_jwks
     uri = URI.join(clerk_issuer, "/.well-known/jwks.json")
-    response = Net::HTTP.get_response(uri)
-    raise "JWKS fetch failed: HTTP #{response.code}" unless response.is_a?(Net::HTTPSuccess)
+
+    response = Net::HTTP.start(
+      uri.host, uri.port,
+      use_ssl: uri.scheme == "https",
+      open_timeout: JWKS_OPEN_TIMEOUT,
+      read_timeout: JWKS_READ_TIMEOUT,
+      write_timeout: JWKS_READ_TIMEOUT,
+    ) { |http| http.get(uri.request_uri) }
+
+    raise JwksFetchError, "HTTP #{response.code} from #{uri}" unless response.is_a?(Net::HTTPSuccess)
 
     JSON.parse(response.body).deep_symbolize_keys
+  rescue JwksFetchError
+    raise
+  rescue Timeout::Error, IOError, SocketError, SystemCallError, OpenSSL::SSL::SSLError, JSON::ParserError => e
+    raise JwksFetchError, "#{e.class}: #{e.message} (#{uri})"
   end
 end

@@ -5,6 +5,8 @@ Living handoff doc. Update as state changes. **Last updated: 2026-09-21 (hardeni
 > **2026-09-21:** Work resumes. The engineering plan for the next pass is [docs/hardening-and-gaps-spec.md](docs/hardening-and-gaps-spec.md). Point a fresh agent at that file. It supersedes the "Next slice" section below for ordering; the testing plan below is still current.
 >
 > **2026-09-21 PM:** Workstream 1 (runtime upgrade) is done and verified locally, uncommitted. Ruby 3.4.7, Rails 8.1.3.1, Node 24.21.0 in Docker, Sprockets 4.4.1 (needed for json 3.x). Action Cable removed. Session stopped per the spec's "commit W1 on its own" rule. Local gotchas: asdf ignores `.ruby-version` here, so a `.tool-versions` file was added; cssbundling-rails picks `bun` over yarn when the bun binary is on PATH and recreates `bun.lock` on `assets:precompile`, so delete it again if it reappears.
+>
+> **2026-09-21 PM, W2 done:** ShopinfoApi has 3s connect / 5s read timeouts, GET-only retries (2, backoff) via faraday-retry, and a theme.watch User-Agent. JWKS fetch is bounded at 3s and serves cached keys (up to 24h stale) when a refresh fails. Tests live in `test/services/shopinfo_api_test.rb` and `test/controllers/concerns/clerk_authenticatable_test.rb` (WebMock added). `bun.lock` is now gitignored. Next: Workstream 3.
 
 For project context, conventions, and architectural decisions see [CLAUDE.md](CLAUDE.md). For the original 9-step bootstrap plan see `~/RubyOnRails/web_scraper/docs/theme-watch-app-bootstrap.md`. For the API contract see `~/RubyOnRails/web_scraper/docs/api/theme-watch-contract.md`.
 

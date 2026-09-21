@@ -12,7 +12,7 @@ class MyAppCompatibilitiesController < ApplicationController
   rescue ShopinfoApi::Error => e
     @compatibilities = []
     @api_error = e.status == 404 ? "App listing not found." : "shopinfo.app returned HTTP #{e.status}."
-  rescue Faraday::ConnectionFailed
+  rescue Faraday::ConnectionFailed, Faraday::TimeoutError
     @compatibilities = []
     @api_error = "Could not reach shopinfo.app at #{ENV.fetch('SHOPINFO_API_BASE_URL', ShopinfoApi::DEFAULT_BASE_URL)}."
   end
