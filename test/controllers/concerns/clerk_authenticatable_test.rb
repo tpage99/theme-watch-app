@@ -96,6 +96,25 @@ class ClerkAuthenticatableTest < ActionDispatch::IntegrationTest
     assert_rejected
   end
 
+  # --- sidebar identity ---------------------------------------------------------
+
+  test "the sidebar shows the email claim when the token has one" do
+    clerk_sign_in(sub: "user_abc", email: "dev@example.com")
+
+    get alerts_path
+
+    assert_select "aside [title=user_abc]", text: "dev@example.com"
+  end
+
+  test "the sidebar shows a neutral label and keeps the raw Clerk ID out of the visible text" do
+    clerk_sign_in(sub: "user_abc")
+
+    get alerts_path
+
+    assert_select "aside [title=user_abc]", text: "Signed in"
+    assert_select "aside", text: /user_abc/, count: 0
+  end
+
   # --- JWKS caching and failure ---------------------------------------------
 
   test "JWKS is cached between requests" do

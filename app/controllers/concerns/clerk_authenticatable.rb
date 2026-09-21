@@ -26,16 +26,40 @@ module ClerkAuthenticatable
     helper_method :clerk_signed_in?, :clerk_user_email, :clerk_user_id, :clerk_payload
   end
 
+  POST_SIGN_IN_SESSION_KEY = :post_sign_in_redirect
+
+  # Reduces an untrusted return-to value to a same-origin path. Anything that is
+  # not a plain absolute path (a full URL, a protocol-relative //host, a
+  # backslash trick, whitespace, or a sign-in page that would loop) falls back.
+  def self.safe_return_path(value, fallback:)
+    return fallback unless value.is_a?(String)
+    return fallback unless value.match?(%r{\A/(?![/\\])[^\s]*\z})
+    return fallback if value.start_with?("/sign-in", "/sign-up")
+
+    value
+  end
+
   private
 
   def require_clerk_user!
-    return if clerk_signed_in?
+    if clerk_signed_in?
+      # The stored path has done its job once an authenticated request succeeds.
+      session.delete(POST_SIGN_IN_SESSION_KEY)
+      return
+    end
 
     # `request.path` only — never `request.fullpath`. Clerk's handshake redirect
     # arrives at /dashboard with a multi-kilobyte `__clerk_handshake` JWT in the
     # query string; storing it would overflow the 4KB session cookie limit.
-    session[:post_sign_in_redirect] = request.path if request.get?
+    session[POST_SIGN_IN_SESSION_KEY] = request.path if request.get?
     redirect_to sign_in_path
+  end
+
+  # Where Clerk should send the user after sign-in or sign-up. Read, not
+  # deleted, so a sign-in page that hands off to sign-up keeps the target; the
+  # key is cleared by require_clerk_user! on the first authenticated request.
+  def post_sign_in_path
+    ClerkAuthenticatable.safe_return_path(session[POST_SIGN_IN_SESSION_KEY], fallback: dashboard_path)
   end
 
   def clerk_signed_in?

@@ -211,7 +211,7 @@ Not code in this repo, but the agent should surface them to Taylor at the right 
 - [x] 2 Outbound HTTP hardening (2026-09-21)
 - [x] 3 Error handling consolidation (2026-09-21)
 - [x] 4 Tests and CI (2026-09-21)
-- [ ] 5 Auth flow correctness
+- [x] 5 Auth flow correctness (2026-09-21)
 - [ ] 6 Security headers and config
 - [ ] 7 Remove unused machinery (task 1, Action Cable, already done in W1)
 - [ ] 8 View cleanup
