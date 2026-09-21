@@ -209,7 +209,7 @@ Not code in this repo, but the agent should surface them to Taylor at the right 
 
 - [x] 1 Runtime upgrade (2026-09-21, committed)
 - [x] 2 Outbound HTTP hardening (2026-09-21)
-- [ ] 3 Error handling consolidation
+- [x] 3 Error handling consolidation (2026-09-21)
 - [ ] 4 Tests and CI
 - [ ] 5 Auth flow correctness
 - [ ] 6 Security headers and config

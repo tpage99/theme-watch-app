@@ -7,6 +7,8 @@ require "webmock/minitest"
 # example the ShopinfoApi timeout tests) allow it explicitly.
 WebMock.disable_net_connect!
 
+Dir[File.expand_path("support/**/*.rb", __dir__)].sort.each { |f| require f }
+
 module ActiveSupport
   class TestCase
     # Run tests in parallel with specified workers

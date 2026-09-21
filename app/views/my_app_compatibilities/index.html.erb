@@ -10,18 +10,8 @@
     <p class="mt-2 text-sm text-white/40">Theme compatibility rows for this listing. Public rows show on the public app page on shopinfo.app.</p>
   </header>
 
-  <% if flash[:notice] %>
-    <div class="mb-6 rounded-xl border border-tw-500/30 bg-tw-500/[0.06] p-4 text-sm text-tw-200"><%= flash[:notice] %></div>
-  <% end %>
-  <% if flash[:alert] %>
-    <div class="mb-6 rounded-xl border border-amber-500/30 bg-amber-500/[0.06] p-4 text-sm text-amber-200"><%= flash[:alert] %></div>
-  <% end %>
-
   <% if @api_error %>
-    <div class="rounded-xl border border-amber-500/20 bg-amber-500/[0.04] p-6">
-      <h2 class="text-base font-semibold text-amber-300">Could not load compatibilities.</h2>
-      <p class="mt-2 text-sm text-white/55"><%= @api_error %></p>
-    </div>
+    <%= render "shared/api_error", title: "Could not load compatibilities.", message: @api_error %>
   <% else %>
     <section class="mb-8 rounded-xl border border-white/10 bg-white/[0.03] p-5">
       <h2 class="text-sm font-semibold tracking-tight mb-3">Add a compatibility row</h2>

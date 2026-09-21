@@ -7,10 +7,7 @@
   </header>
 
   <% if @api_error %>
-    <div class="rounded-xl border border-amber-500/20 bg-amber-500/[0.04] p-6">
-      <h2 class="text-base font-semibold text-amber-300">Could not load your apps.</h2>
-      <p class="mt-2 text-sm text-white/55"><%= @api_error %></p>
-    </div>
+    <%= render "shared/api_error", title: "Could not load your apps.", message: @api_error %>
   <% elsif @apps.any? %>
     <ul class="space-y-3">
       <% @apps.each do |app| %>

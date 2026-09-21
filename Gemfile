@@ -44,6 +44,11 @@ gem "bootsnap", require: false
 # Verify Clerk-issued JWTs against the Clerk JWKS endpoint.
 gem "jwt", "~> 2.10"
 
+# Pin json to 2.x: json 3.0 made JSON.parse options keyword-only and Active Support
+# 8.1.3 still passes a positional hash when decoding cookies, which 500s every
+# request that carries a session cookie. Revisit when Rails ships a fix.
+gem "json", "~> 2.21"
+
 # HTTP client for the shopinfo.app API.
 gem "faraday", "~> 2.14"
 # Retry middleware for the shopinfo.app client (idempotent GETs only, see ShopinfoApi#connection).
