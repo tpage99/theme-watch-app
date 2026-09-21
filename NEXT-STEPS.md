@@ -15,6 +15,8 @@ Living handoff doc. Update as state changes. **Last updated: 2026-09-21 (hardeni
 > **2026-09-21 PM, W5 done:** `session[:post_sign_in_redirect]` is now consumed: `SessionsController` passes it (sanitized by `ClerkAuthenticatable.safe_return_path`) into the Clerk mount for both sign-in and sign-up, and `require_clerk_user!` clears it on the first authenticated request. Sidebar shows the email claim or "Signed in", with the Clerk ID only in a `title` tooltip. 67 tests green. Next: Workstream 6.
 >
 > **2026-09-21 PM, W6 done:** CSP in `config/initializers/content_security_policy.rb`, **report-only**; after one production deploy with a clean console on landing, sign-in, dashboard, My Apps and compatibilities, set `content_security_policy_report_only = false`. Clerk host is read per request from `CLERK_FRONTEND_API`. Production `config.hosts` = theme.watch, www, `RENDER_EXTERNAL_HOSTNAME`, `*.onrender.com`; `/up` excluded from host auth and SSL redirect; `assume_ssl = true`. Session cookie is `_theme_watch_session`, lax, secure in production (existing sessions drop harmlessly on deploy). 72 tests green. Next: Workstream 7.
+>
+> **2026-09-21 PM, W7 done:** jbuilder gem and the default `hello_controller.js` removed (Action Cable went in W1). Action Mailer, `app/mailers/` and the mailer layouts stay for Phase 3 alerts. Next: Workstream 8.
 
 For project context, conventions, and architectural decisions see [CLAUDE.md](CLAUDE.md). For the original 9-step bootstrap plan see `~/RubyOnRails/web_scraper/docs/theme-watch-app-bootstrap.md`. For the API contract see `~/RubyOnRails/web_scraper/docs/api/theme-watch-contract.md`.
 
