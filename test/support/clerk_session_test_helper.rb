@@ -43,9 +43,14 @@ module ClerkSessionTestHelper
       .to_return(status: 200, headers: { "Content-Type" => "application/json" }, body: clerk_jwks_body)
   end
 
-  # Returns a signed session token. Pass claim overrides, e.g. exp: 1.hour.ago.to_i,
-  # or a different key to simulate a token from another Clerk instance.
-  def clerk_token(claims = {}, key: @clerk_private_key, kid: CLERK_KID)
+  # Returns a signed session token. Pass claim overrides, e.g. exp: 1.hour.ago.to_i.
+  # The special keys :key and :kid sign with a different RSA key or key id to
+  # simulate a token from another Clerk instance. Declared without keyword
+  # arguments on purpose so `clerk_token(sub: "x")` is treated as claims.
+  def clerk_token(claims = {})
+    claims = claims.dup
+    key = claims.delete(:key) || @clerk_private_key
+    kid = claims.delete(:kid) || CLERK_KID
     now = Time.now.to_i
     payload = { iss: CLERK_ISSUER, sub: "user_test", iat: now, exp: now + 300 }.merge(claims)
     JWT.encode(payload, key, "RS256", kid: kid)
