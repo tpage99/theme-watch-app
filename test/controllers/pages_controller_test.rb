@@ -17,6 +17,13 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     assert_select 'a[href="#"]', count: 0
   end
 
+  test "the landing page mock carries no fabricated counts" do
+    get root_path
+
+    assert_includes response.body, "See all compatible apps"
+    assert_no_match(/See all \d+ compatible apps/, response.body)
+  end
+
   test "sign-in and sign-up render the Clerk mount points" do
     get sign_in_path
     assert_response :success

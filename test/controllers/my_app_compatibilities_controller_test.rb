@@ -40,6 +40,46 @@ class MyAppCompatibilitiesControllerTest < ActionDispatch::IntegrationTest
     assert_includes response.body, "Last edited by admin"
   end
 
+  test "both status selects use the single Compatibility vocabulary" do
+    clerk_sign_in
+    stub_index(compat_row(status: "needs_customization"))
+
+    get my_app_compatibilities_path(SLUG)
+
+    assert_select "select[name=status]", count: 2
+    assert_select "select[name=status]" do |selects|
+      selects.each do |select|
+        values = select.css("option").map { |o| o["value"] }
+        assert_equal Compatibility::STATUSES.keys, values
+        labels = select.css("option").map(&:text)
+        assert_equal Compatibility::STATUSES.values, labels
+      end
+    end
+    assert_select "li select[name=status] option[selected][value=needs_customization]"
+  end
+
+  test "updated_at renders as relative time with the ISO timestamp preserved" do
+    clerk_sign_in
+    stub_index(compat_row.merge(updated_at: 3.days.ago.utc.iso8601))
+
+    get my_app_compatibilities_path(SLUG)
+
+    assert_select "li time[datetime]", text: "3 days ago"
+    assert_select "li time[datetime]" do |times|
+      assert_nothing_raised { Time.iso8601(times.first["datetime"]) }
+    end
+  end
+
+  test "an unparseable updated_at falls back to the raw string" do
+    clerk_sign_in
+    stub_index(compat_row.merge(updated_at: "not a date"))
+
+    get my_app_compatibilities_path(SLUG)
+
+    assert_response :success
+    assert_includes response.body, "not a date"
+  end
+
   test "shows the empty state and the add form when there are no rows" do
     clerk_sign_in
     stub_index

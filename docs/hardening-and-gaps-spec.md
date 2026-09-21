@@ -214,7 +214,7 @@ Not code in this repo, but the agent should surface them to Taylor at the right 
 - [x] 5 Auth flow correctness (2026-09-21)
 - [x] 6 Security headers and config (2026-09-21, CSP report-only until one clean deploy)
 - [x] 7 Remove unused machinery (2026-09-21; Action Mailer kept for Phase 3)
-- [ ] 8 View cleanup
+- [x] 8 View cleanup (2026-09-21; sign-out stays JS-only, see note)
 - [ ] 9a Claim flow
 - [ ] 9b Delete compatibility row
 - [ ] 9c Edit listing

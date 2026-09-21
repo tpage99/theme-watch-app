@@ -2,7 +2,7 @@
 
 <div class="max-w-4xl">
   <nav class="mb-4 text-xs text-white/40">
-    <%= link_to "← My Apps", my_apps_path, class: "hover:text-tw-300 underline-offset-2 hover:underline" %>
+    <%= link_to "← My Apps", my_apps_path, class: "rounded hover:text-tw-300 underline-offset-2 hover:underline #{focus_ring}" %>
   </nav>
 
   <header class="mb-8">
@@ -23,7 +23,7 @@
           </label>
           <label class="block">
             <span class="text-xs uppercase tracking-wider text-white/45">Status</span>
-            <%= f.select :status, [["Supported", "supported"], ["Needs customization", "needs_customization"], ["Not supported", "not_supported"], ["Unknown", "unknown"]], {}, class: "mt-1 w-full rounded-md border border-white/15 bg-white/[0.04] px-3 py-2 text-sm text-white focus:border-tw-400 focus:outline-none" %>
+            <%= f.select :status, Compatibility.status_options, {}, class: "mt-1 w-full rounded-md border border-white/15 bg-white/[0.04] px-3 py-2 text-sm text-white focus:border-tw-400 focus:outline-none" %>
           </label>
         </div>
         <div class="grid sm:grid-cols-2 gap-3">
@@ -40,7 +40,7 @@
           <span class="text-xs uppercase tracking-wider text-white/45">Notes</span>
           <%= f.text_area :notes, rows: 2, class: "mt-1 w-full rounded-md border border-white/15 bg-white/[0.04] px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-tw-400 focus:outline-none", placeholder: "Optional, max 1000 chars" %>
         </label>
-        <button type="submit" class="rounded-md bg-tw-500 hover:bg-tw-400 text-tw-950 text-sm font-semibold px-4 py-2 transition-colors">Save compatibility</button>
+        <button type="submit" class="<%= button_classes(:primary) %>">Save compatibility</button>
       <% end %>
     </section>
 
@@ -53,7 +53,7 @@
                 <div>
                   <h3 class="text-base font-semibold tracking-tight"><%= row["theme_title"] %></h3>
                   <p class="mt-1 text-[11px] text-white/40 font-mono">
-                    Last edited by <%= row["last_authored_by"] %> · <%= row["updated_at"] %>
+                    Last edited by <%= row["last_authored_by"] %> · <%= relative_time(row["updated_at"]) %>
                   </p>
                 </div>
                 <% unless row["visible_publicly"] %>
@@ -64,7 +64,7 @@
               <div class="grid sm:grid-cols-2 gap-3">
                 <label class="block">
                   <span class="text-xs uppercase tracking-wider text-white/45">Status</span>
-                  <%= f.select :status, [["Supported", "supported"], ["Needs customization", "needs_customization"], ["Not supported", "not_supported"], ["Unknown", "unknown"]], { selected: row["status"] }, class: "mt-1 w-full rounded-md border border-white/15 bg-white/[0.04] px-3 py-2 text-sm text-white focus:border-tw-400 focus:outline-none" %>
+                  <%= f.select :status, Compatibility.status_options, { selected: row["status"] }, class: "mt-1 w-full rounded-md border border-white/15 bg-white/[0.04] px-3 py-2 text-sm text-white focus:border-tw-400 focus:outline-none" %>
                 </label>
                 <label class="block">
                   <span class="text-xs uppercase tracking-wider text-white/45">Min theme version</span>
@@ -82,7 +82,7 @@
                   <%= f.check_box :visible_publicly, { checked: row["visible_publicly"] }, "true", "false" %>
                   <span class="text-xs text-white/65">Visible publicly</span>
                 </label>
-                <button type="submit" class="rounded-md bg-tw-500 hover:bg-tw-400 text-tw-950 text-sm font-semibold px-4 py-2 transition-colors">Save</button>
+                <button type="submit" class="<%= button_classes(:primary) %>">Save</button>
               </div>
             <% end %>
           </li>

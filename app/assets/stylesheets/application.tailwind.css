@@ -86,3 +86,12 @@ body {
   width: 1px;
   background: linear-gradient(to bottom, transparent, rgba(20, 184, 151, 0.3), transparent);
 }
+
+/* Keyboard focus is visible on every interactive element, everywhere. Buttons
+   built with ApplicationHelper#button_classes override this with a ring. */
+@layer base {
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-tw-400);
+    outline-offset: 2px;
+  }
+}
