@@ -188,6 +188,7 @@ After each endpoint ships, mark it `(live)` in `theme-watch-contract.md` and not
 
 Not code in this repo, but the agent should surface them to Taylor at the right moment.
 
+- **CLERK_SECRET_KEY on the theme-watch Render service** (Taylor, optional): makes `DELETE /sign-out` revoke the session at Clerk so the browser script cannot silently re-sign the user in from Clerk's own `__client` cookie. Without it, sign-out relies on Clerk JS having ended the session client-side, which is the normal path. Add it when moving to the Clerk production instance at the latest.
 - **Clerk session token claims** (Taylor, Clerk dashboard, 2 minutes): add `email` and `name` to the session token. JSON in NEXT-STEPS.md. Unblocks the dashboard greeting and sidebar identity.
 - **Delete the old landing-page Cloudflare Worker**: the fallback period ended 2026-06-05. Safe to delete now. The waitlist Worker is a different Worker and stays.
 - **Render internal hostname**: swap `SHOPINFO_API_BASE_URL` to the private-network hostname once confirmed both services are in the same Render workspace. Do this after Workstream 2 so the timeouts are in place.
@@ -214,7 +215,7 @@ Not code in this repo, but the agent should surface them to Taylor at the right 
 - [x] 5 Auth flow correctness (2026-09-21)
 - [x] 6 Security headers and config (2026-09-21, CSP report-only until one clean deploy)
 - [x] 7 Remove unused machinery (2026-09-21; Action Mailer kept for Phase 3)
-- [x] 8 View cleanup (2026-09-21; sign-out stays JS-only, see note)
+- [x] 8 View cleanup (2026-09-21). Sign-out reworked 2026-09-22 as a real DELETE /sign-out form with Clerk JS as progressive enhancement; server revokes the Clerk session when the optional CLERK_SECRET_KEY is set.
 - [ ] 9a Claim flow
 - [ ] 9b Delete compatibility row
 - [ ] 9c Edit listing

@@ -80,14 +80,13 @@
         <div class="text-xs text-white/75 font-medium truncate" title="<%= clerk_user_id %>"><%= email || "Signed in" %></div>
       </div>
     </div>
-    <button
-      type="button"
-      data-controller="clerk-sign-out"
-      data-action="click->clerk-sign-out#signOut"
-      class="<%= button_classes(:secondary, "w-full") %>"
-    >
-      Sign out
-    </button>
+    <%# A real form so sign-out works without JavaScript. With JavaScript the
+        clerk-sign-out controller ends the Clerk session client-side first,
+        then submits this form so the server clears its side too. %>
+    <%= button_to "Sign out", sign_out_path,
+          method: :delete,
+          form: { class: "w-full", data: { controller: "clerk-sign-out", action: "submit->clerk-sign-out#signOut" } },
+          class: button_classes(:secondary, "w-full") %>
   </div>
 </aside>
 

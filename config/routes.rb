@@ -25,4 +25,5 @@ Rails.application.routes.draw do
 
   get  "sign-in",  to: "sessions#new",      as: :sign_in
   get  "sign-up",  to: "sessions#sign_up",  as: :sign_up
+  delete "sign-out", to: "sessions#destroy", as: :sign_out
 end

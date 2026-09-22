@@ -85,6 +85,11 @@ module ClerkAuthenticatable
     clerk_payload&.dig("email")
   end
 
+  # Clerk session id (`sid` claim). Used to revoke the session on sign-out.
+  def clerk_session_id
+    clerk_payload&.dig("sid")
+  end
+
   def bearer_token
     header = request.headers["Authorization"].to_s
     header.start_with?("Bearer ") ? header.sub(/^Bearer /, "") : nil
