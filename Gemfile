@@ -1,15 +1,15 @@
 source "https://rubygems.org"
 
-ruby "3.2.2"
+ruby "3.4.7"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.1.4"
+gem "rails", "~> 8.1.3"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", ">= 5.0"
+gem "puma", "~> 8.0"
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem "jsbundling-rails"
@@ -22,9 +22,6 @@ gem "stimulus-rails"
 
 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
 gem "cssbundling-rails"
-
-# Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem "jbuilder"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
@@ -42,10 +39,17 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 
 # Verify Clerk-issued JWTs against the Clerk JWKS endpoint.
-gem "jwt", "~> 2.8"
+gem "jwt", "~> 2.10"
+
+# Pin json to 2.x: json 3.0 made JSON.parse options keyword-only and Active Support
+# 8.1.3 still passes a positional hash when decoding cookies, which 500s every
+# request that carries a session cookie. Revisit when Rails ships a fix.
+gem "json", "~> 2.21"
 
 # HTTP client for the shopinfo.app API.
-gem "faraday", "~> 2.9"
+gem "faraday", "~> 2.14"
+# Retry middleware for the shopinfo.app client (idempotent GETs only, see ShopinfoApi#connection).
+gem "faraday-retry", "~> 2.4"
 
 # Load environment variables from .env in dev/test.
 gem "dotenv-rails", groups: [:development, :test]
@@ -67,6 +71,9 @@ group :development do
 end
 
 group :test do
+  # Stub outbound HTTP (Clerk JWKS, shopinfo.app) in tests.
+  gem "webmock"
+
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"

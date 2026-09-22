@@ -38,3 +38,8 @@
 !/app/assets/builds/.keep
 
 /node_modules
+
+# cssbundling-rails prefers bun over yarn whenever the bun binary is on PATH and
+# writes a lockfile on every build. The project is yarn-only; never commit these.
+/bun.lock
+/bun.lockb

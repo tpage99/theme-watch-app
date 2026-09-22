@@ -1,0 +1,6 @@
+<% if flash[:notice].present? %>
+  <div class="mb-6 rounded-xl border border-tw-500/30 bg-tw-500/[0.06] p-4 text-sm text-tw-200" role="status"><%= flash[:notice] %></div>
+<% end %>
+<% if flash[:alert].present? %>
+  <div class="mb-6 rounded-xl border border-amber-500/30 bg-amber-500/[0.06] p-4 text-sm text-amber-200" role="alert"><%= flash[:alert] %></div>
+<% end %>

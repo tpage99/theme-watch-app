@@ -7,10 +7,7 @@
   </header>
 
   <% if @api_error %>
-    <div class="rounded-xl border border-amber-500/20 bg-amber-500/[0.04] p-6">
-      <h2 class="text-base font-semibold text-amber-300">Could not load your apps.</h2>
-      <p class="mt-2 text-sm text-white/55"><%= @api_error %></p>
-    </div>
+    <%= render "shared/api_error", title: "Could not load your apps.", message: @api_error %>
   <% elsif @apps.any? %>
     <ul class="space-y-3">
       <% @apps.each do |app| %>
@@ -37,9 +34,9 @@
             <% end %>
             <div class="mt-3 flex items-center gap-4 text-xs text-white/40">
               <span><%= app["compatible_theme_count"] %> compatible <%= "theme".pluralize(app["compatible_theme_count"]) %></span>
-              <%= link_to "Manage compatibilities →", my_app_compatibilities_path(app["slug"]), class: "text-tw-300 hover:text-tw-200 underline-offset-2 hover:underline font-medium" %>
+              <%= link_to "Manage compatibilities →", my_app_compatibilities_path(app["slug"]), class: "rounded text-tw-300 hover:text-tw-200 underline-offset-2 hover:underline font-medium #{focus_ring}" %>
               <% if app["shopify_app_store_url"].present? %>
-                <a href="<%= app["shopify_app_store_url"] %>" target="_blank" rel="noopener" class="text-white/55 hover:text-tw-300 underline-offset-2 hover:underline">View on Shopify App Store</a>
+                <a href="<%= app["shopify_app_store_url"] %>" target="_blank" rel="noopener" class="rounded text-white/55 hover:text-tw-300 underline-offset-2 hover:underline <%= focus_ring %>">View on Shopify App Store</a>
               <% end %>
             </div>
           </div>

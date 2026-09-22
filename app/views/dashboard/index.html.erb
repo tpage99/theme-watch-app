@@ -6,7 +6,9 @@
     <p class="mt-2 text-sm text-white/40">Your theme.watch developer profile, pulled live from shopinfo.app.</p>
   </header>
 
-  <% if @ping %>
+  <% if @api_error %>
+    <%= render "shared/api_error", title: "Signed in, but shopinfo.app could not be reached.", message: @api_error %>
+  <% else %>
     <% display_email = @ping["email"].presence || clerk_user_email %>
     <div class="rounded-xl border border-white/10 bg-white/[0.03] p-8">
       <h2 class="text-xl font-semibold tracking-tight">
@@ -34,12 +36,6 @@
           <dd class="mt-1 text-white/80 text-xs"><%= @ping["clerk_last_seen_at"] %></dd>
         </div>
       </dl>
-    </div>
-  <% else %>
-    <div class="rounded-xl border border-amber-500/20 bg-amber-500/[0.04] p-6">
-      <h2 class="text-base font-semibold text-amber-300">Signed in, but shopinfo.app could not be reached.</h2>
-      <p class="mt-2 text-sm text-white/55"><%= @api_error %></p>
-      <p class="mt-2 text-xs text-white/35">Clerk JWT was verified locally — only the upstream API call failed.</p>
     </div>
   <% end %>
 </div>

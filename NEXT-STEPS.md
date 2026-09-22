@@ -1,6 +1,24 @@
 # Where to pick up
 
-Living handoff doc. Update as state changes. **Last updated: 2026-05-22 (compatibilities pair shipped).**
+Living handoff doc. Update as state changes. **Last updated: 2026-09-21 (hardening spec written, no code changed since 2026-05-22).**
+
+> **2026-09-21:** Work resumes. The engineering plan for the next pass is [docs/hardening-and-gaps-spec.md](docs/hardening-and-gaps-spec.md). Point a fresh agent at that file. It supersedes the "Next slice" section below for ordering; the testing plan below is still current.
+>
+> **2026-09-21 PM:** Workstream 1 (runtime upgrade) is done and verified locally, uncommitted. Ruby 3.4.7, Rails 8.1.3.1, Node 24.21.0 in Docker, Sprockets 4.4.1 (needed for json 3.x). Action Cable removed. Session stopped per the spec's "commit W1 on its own" rule. Local gotchas: asdf ignores `.ruby-version` here, so a `.tool-versions` file was added; cssbundling-rails picks `bun` over yarn when the bun binary is on PATH and recreates `bun.lock` on `assets:precompile`, so delete it again if it reappears.
+>
+> **2026-09-21 PM, W2 done:** ShopinfoApi has 3s connect / 5s read timeouts, GET-only retries (2, backoff) via faraday-retry, and a theme.watch User-Agent. JWKS fetch is bounded at 3s and serves cached keys (up to 24h stale) when a refresh fails. Tests live in `test/services/shopinfo_api_test.rb` and `test/controllers/concerns/clerk_authenticatable_test.rb` (WebMock added). `bun.lock` is now gitignored. Next: Workstream 3.
+>
+> **2026-09-21 PM, W3 done:** API errors are handled once in `ApplicationController` (`rescue_from` + `api_error` + `log_api_failure`), rendered through `shared/_api_error`, flash lives in the authenticated layout (`shared/_flash_messages`), sign-out route and duplicate concern include removed. **Critical fix found here: json 3.0 breaks Active Support 8.1.3 cookie decoding (every request with a session cookie 500s). `Gemfile` now pins `json ~> 2.21`. The W1 PR must include this before merge.** Next: Workstream 4.
+>
+> **2026-09-21 PM, W4 done:** 55 tests, 225 assertions, green locally with and without `CI=true`. Coverage: `ShopinfoApi` (responses, headers, URL building, real-socket timeout and retry), `ClerkAuthenticatable` (valid, expired, wrong issuer, wrong key, unknown kid, malformed, bearer precedence, JWKS cache and stale fallback), dashboard, my apps, compatibilities (index, empty, create, update, 403 admin_locked and not_owner, 422, 404), landing page (no bare `href="#"`). Shared sign-in helper in `test/support/clerk_session_test_helper.rb`. CI at `.github/workflows/ci.yml`, not yet exercised on GitHub. Next: Workstream 5.
+>
+> **2026-09-21 PM, W5 done:** `session[:post_sign_in_redirect]` is now consumed: `SessionsController` passes it (sanitized by `ClerkAuthenticatable.safe_return_path`) into the Clerk mount for both sign-in and sign-up, and `require_clerk_user!` clears it on the first authenticated request. Sidebar shows the email claim or "Signed in", with the Clerk ID only in a `title` tooltip. 67 tests green. Next: Workstream 6.
+>
+> **2026-09-21 PM, W6 done:** CSP in `config/initializers/content_security_policy.rb`, **report-only**; after one production deploy with a clean console on landing, sign-in, dashboard, My Apps and compatibilities, set `content_security_policy_report_only = false`. Clerk host is read per request from `CLERK_FRONTEND_API`. Production `config.hosts` = theme.watch, www, `RENDER_EXTERNAL_HOSTNAME`, `*.onrender.com`; `/up` excluded from host auth and SSL redirect; `assume_ssl = true`. Session cookie is `_theme_watch_session`, lax, secure in production (existing sessions drop harmlessly on deploy). 72 tests green. Next: Workstream 7.
+>
+> **2026-09-21 PM, W7 done:** jbuilder gem and the default `hello_controller.js` removed (Action Cable went in W1). Action Mailer, `app/mailers/` and the mailer layouts stay for Phase 3 alerts. Next: Workstream 8.
+>
+> **2026-09-21 PM, W8 done:** `Compatibility` PORO (`app/models/compatibility.rb`) is the one source of status options; `ApplicationHelper#button_classes` and `#focus_ring` carry the focus ring, plus a global `:focus-visible` outline in the stylesheet; `relative_time` renders `<time datetime>`; landing mock says "See all compatible apps"; Alerts and Settings show a "Coming in Phase 3" pill. Sign-out remains a JS-only button because W3 deleted the server route; the waitlist form is JS-only because the Worker expects JSON. 86 tests green. Next: Workstream 9a (cross-repo).
 
 For project context, conventions, and architectural decisions see [CLAUDE.md](CLAUDE.md). For the original 9-step bootstrap plan see `~/RubyOnRails/web_scraper/docs/theme-watch-app-bootstrap.md`. For the API contract see `~/RubyOnRails/web_scraper/docs/api/theme-watch-contract.md`.
 
